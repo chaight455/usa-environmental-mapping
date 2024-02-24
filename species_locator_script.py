@@ -30,7 +30,7 @@ zipcode = st.number_input('Enter Valid 5-digit US Zipcode to See Specific Locati
 
 dropdown = st.selectbox("Choose Map", ["Droughts"])
 
-if dropdown = "Droughts":
+if dropdown == "Droughts":
       for index, row in county_data.iterrows():
           #no fucking clue why it dosen't let me use the actual collumn name INTPTLONG
           folium.Marker([row["INTPTLAT"], row[9]], popup=row["NAME"]).add_to(mymap)
