@@ -6,6 +6,7 @@ import earthpy as et
 import pgeocode
 import streamlit_folium
 import pandas as pd
+import random
 
 #Functions
 def pinpoint_location(zipcode = "0"):
@@ -37,5 +38,10 @@ zipcode = st.number_input('Enter Valid 5-digit US Zipcode to See Specific Locati
 dropdown = st.selectbox("Choose Map", ["Droughts"])
 
 #add markers to map based on type that user choose
-if (dropdown == "Droughts"):
-      streamlit_folium.folium_static(pinpoint_location(str(zipcode)))
+if dropdown == "Droughts":
+      mymap = pinpoint_location(str(zipcode)) # Store the map returned by the function
+      for index, row in county_data.iterrows():
+          # Access the 'INTPTLAT' and 'INTPTLONG' columns directly
+          folium.Marker([row["INTPTLAT"]+random.uniform(0, 1), row[9]]+random.uniform(0, 1), popup=row["NAME"]).add_to(mymap)
+    
+streamlit_folium.folium_static(mymap)
