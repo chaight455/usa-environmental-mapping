@@ -7,6 +7,9 @@ import pgeocode
 import streamlit_folium
 import pandas as pd
 
+#dataframe
+county_data = pd.read_csv(os.path.join("county_info_2016.csv"))
+
 #Functions
 def pinpoint_location(zipcode = "0"):
       nomi = pgeocode.Nominatim('us')
