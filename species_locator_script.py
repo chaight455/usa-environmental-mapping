@@ -6,6 +6,7 @@ import earthpy as et
 import pgeocode
 import streamlit_folium
 import pandas as pd
+import os
 
 #dataframe
 county_data = pd.read_csv(os.path.join("county_info_2016.csv"))
@@ -34,11 +35,9 @@ zipcode = st.number_input('Enter Valid 5-digit US Zipcode to See Specific Locati
 dropdown = st.selectbox("Choose Map", ["Droughts"])
 
 if dropdown == "Droughts":
+      mymap = pinpoint_location(str(zipcode)) # Store the map returned by the function
       for index, row in county_data.iterrows():
-          #no fucking clue why it dosen't let me use the actual collumn name INTPTLONG
-          folium.Marker([row["INTPTLAT"], row[9]], popup=row["NAME"]).add_to(mymap)
+          # Access the 'INTPTLAT' and 'INTPTLONG' columns directly
+          folium.Marker([row["INTPTLAT"], row["INTPTLONG"]], popup=row["NAME"]).add_to(mymap)
     
-mymap
-
-
-streamlit_folium.folium_static(pinpoint_location(str(zipcode)))
+streamlit_folium.folium_static(mymap)
