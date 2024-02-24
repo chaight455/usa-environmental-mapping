@@ -38,6 +38,6 @@ if dropdown == "Droughts":
       mymap = pinpoint_location(str(zipcode)) # Store the map returned by the function
       for index, row in county_data.iterrows():
           # Access the 'INTPTLAT' and 'INTPTLONG' columns directly
-          folium.Marker([row["INTPTLAT"], row["INTPTLONG"]], popup=row["NAME"]).add_to(mymap)
+          folium.Marker([row["INTPTLAT"], row[9]], popup=row["NAME"]).add_to(mymap)
     
 streamlit_folium.folium_static(mymap)
