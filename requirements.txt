@@ -5,4 +5,3 @@ geopandas
 earthpy
 streamlit_folium
 pgeocode
-random==3.10
