@@ -28,9 +28,6 @@ def pinpoint_location(zipcode = "0"):
             mymap = folium.Map(location=[37.0902, -95.7129], zoom_start = 4)
       return mymap
 
-#Print out blank usa map
-streamlit_folium.folium_static(pinpoint_location(str(zipcode)))
-
 #get zip from user
 zipcode = st.number_input('Enter Valid 5-digit US Zipcode to See Specific Location', min_value=0, max_value=99999, value=0)
 
@@ -38,10 +35,13 @@ zipcode = st.number_input('Enter Valid 5-digit US Zipcode to See Specific Locati
 dropdown = st.selectbox("Choose Map", ["Droughts"])
 
 #add markers to map based on type that user choose
+county_data = pd.read_csv("county_info_2016.csv")
 if dropdown == "Droughts":
       mymap = pinpoint_location(str(zipcode)) # Store the map returned by the function
-      for index, row in county_data.iterrows():
+      heat_data = [[row["INTPTLAT"]+random.uniform(0, 1), row[9]+random.uniform(0, 1)] for index, row in county_data.iterrows()]
+      folium.plugins.HeatMap(heat_data).add_to(mymap)
+      #for index, row in county_data.iterrows():
           # Access the 'INTPTLAT' and 'INTPTLONG' columns directly
-          folium.Marker([row["INTPTLAT"]+random.uniform(0, 1), row[9]]+random.uniform(0, 1), popup=row["NAME"]).add_to(mymap)
+          #folium.Marker([row["INTPTLAT"]+random.uniform(0, 1), row[9]+random.uniform(0, 1)], popup=row["NAME"]).add_to(mymap)
     
 streamlit_folium.folium_static(mymap)
